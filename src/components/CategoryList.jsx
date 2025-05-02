@@ -36,7 +36,7 @@ const CategoryList = () => {
                                     <Typography
                                         variant="small"
                                         color="blue-gray"
-                                        className="font-normal leading-none opacity-70"
+                                        className="font-normal leading-none opacity-70 text-center"
                                     >
                                         {head}
                                     </Typography>
@@ -45,8 +45,8 @@ const CategoryList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {TABLE_ROWS.map(({ categoryName, categoryDescription }, index) => (
-                            <tr key={categoryName} className="even:bg-blue-gray-50/50">
+                        {TABLE_ROWS.map(({ _id, categoryName, categoryDescription }, index) => (
+                            <tr key={categoryName} className="even:bg-blue-gray-50/50 text-center">
                                 <td className="p-4">
                                     <Typography variant="small" color="blue-gray" className="font-normal">
                                         {index + 1}.
@@ -64,16 +64,16 @@ const CategoryList = () => {
                                     </Typography>
                                 </td>
 
-                                <Link to="/updateCategory">
+                                <Link to={`/updateCategory/${_id}`}>
                                     <td className="p-4">
-                                        <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium hover:underline">
+                                        <Typography as="a" variant="small" color="blue-gray" className="font-medium bg-green-400 text-white hover:bg-green-900 transition duration-500 px-2 py-3 rounded-md">
                                             Update
                                         </Typography>
                                     </td>
                                 </Link>
 
                                 <td className="p-4">
-                                    <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium hover:underline ">
+                                    <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium bg-red-400 text-white hover:bg-red-900 transition duration-500  py-3 text-center rounded-md">
                                         Delete
                                     </Typography>
                                 </td>

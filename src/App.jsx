@@ -6,6 +6,7 @@ import Home from "./page/Home";
 import CreateCategory from "./components/CreateCategory";
 import CategoryList from "./components/CategoryList";
 import UpdateCategory from "./components/UpdateCategory";
+import CreateProduct from "./components/CreateProduct";
 
 
 function App() {
@@ -15,9 +16,9 @@ function App() {
       Component: Home,
       children: [
         { path: "/createCategory", Component: CreateCategory },
+        { path: "/createProduct", Component: CreateProduct },
         { path: "/categoryList", Component: CategoryList },
-        // { path: "/editCategories", Component: EditCategories },
-        { path: "/updateCategory", Component: UpdateCategory },
+        { path: "/updateCategory/:id", Component: UpdateCategory },
       ],
     },
   ]);

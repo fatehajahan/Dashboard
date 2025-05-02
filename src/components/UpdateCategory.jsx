@@ -1,31 +1,32 @@
 import { Textarea } from '@material-tailwind/react'
 import {
-    Card,
-    Input,
-    Checkbox,
-    Button,
-    Typography,
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
 } from "@material-tailwind/react";
 import React, { useState } from 'react'
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useParams } from 'react-router';
 
 const UpdateCategory = () => {
+  const { id } = useParams()
+  // console.log(id)
   const [newCategoryName, setNewCategoryName] = useState("")
   const [newCategoryDescription, setNewCategoryDescription] = useState("")
 
-  const handleCreateCategory = () => {
+  const updateCategory = () => {
     console.log(newCategoryName)
     console.log(newCategoryDescription)
     setNewCategoryDescription("")
     setNewCategoryName("")
     const data = {
-      newCategoryName: newCategoryName,
-      newCategoryDescription: newCategoryDescription
+      newCategoryName,
+      newCategoryDescription
     };
-    axios.post("http://localhost:3000/api/v1/category/updatesinglecategory/:id", data)
-      .then((res) => toast.success("Category Updated Successfully"))
-      .catch((err) => toast.error("Failed to Update a Category"));
+axios.patch('http://localhost:3000/api/v1/category/updatecategory/:id', data)
   }
   return (
     <div>
@@ -33,7 +34,7 @@ const UpdateCategory = () => {
         <Toaster />
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
-            Update Category
+            Update Category No. <span className='text-green-500'>${id}</span>
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
             Nice to meet you! Enter your details to register.
@@ -61,10 +62,13 @@ const UpdateCategory = () => {
 
             </div>
 
-            <Button onClick={handleCreateCategory} className="mt-6" fullWidth>
+            <Button
+              onClick={updateCategory}
+
+              className="mt-6" fullWidth>
               Update Category
             </Button>
-            
+
           </form>
         </Card>
       </div>
