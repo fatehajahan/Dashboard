@@ -76,14 +76,6 @@ export function Sidebar() {
                                 </ListItem>
                             </Link>
 
-                            <Link to="/updateCategory" className="text-black">
-                                <ListItem>
-                                    <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Update Categories
-                                </ListItem>
-                            </Link>
                             <ListItem className="text-black">
                                 <ListItemPrefix>
                                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />

@@ -63,12 +63,6 @@ const CreateCategory = () => {
                     <Button onClick={handleCreateCategory} className="mt-6" fullWidth>
                         Create Category
                     </Button>
-                    <Typography color="gray" className="mt-4 text-center font-normal">
-                        Already have an account?{" "}
-                        <a href="#" className="font-medium text-gray-900">
-                            Sign In
-                        </a>
-                    </Typography>
                 </form>
             </Card>
         </div>

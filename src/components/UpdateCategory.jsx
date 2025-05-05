@@ -9,24 +9,30 @@ import {
 import React, { useState } from 'react'
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const UpdateCategory = () => {
   const { id } = useParams()
-  // console.log(id)
+  const navigate = useNavigate()
   const [newCategoryName, setNewCategoryName] = useState("")
   const [newCategoryDescription, setNewCategoryDescription] = useState("")
 
   const updateCategory = () => {
     console.log(newCategoryName)
     console.log(newCategoryDescription)
-    setNewCategoryDescription("")
-    setNewCategoryName("")
+
     const data = {
-      newCategoryName,
-      newCategoryDescription
+      categoryName: newCategoryName,
+      categoryDescription: newCategoryDescription
     };
-axios.patch('http://localhost:3000/api/v1/category/updatecategory/:id', data)
+    axios.patch(`http://localhost:3000/api/v1/category/updatesinglecategory/${id}`, data)
+      .then((res) => {
+        toast.success("Category Updated Successfully")
+        setNewCategoryDescription("")
+        setNewCategoryName("")
+        navigate('/categoryList')
+      })
+      .catch((err) => toast.error("Category Update Failed"))
   }
   return (
     <div>

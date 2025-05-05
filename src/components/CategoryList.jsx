@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react";
 import axios from 'axios';
 import { Link } from 'react-router';
-
+import toast from 'react-hot-toast';
 
 const CategoryList = () => {
-    const [categoryies, setCategories] = useState([])
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         axios.get("http://localhost:3000/api/v1/category/getallcategory")
             .then((res) => setCategories(res.data.data))
     }, [])
-    console.log(categoryies)
-    const TABLE_HEAD = ["Sr No", "Categor Name", "Category Description", "Update", "Delete"];
+    console.log(categories)
+    const TABLE_HEAD = ["Sr No", "Category Name", "Category Description", "Update", "Delete"];
 
-    const TABLE_ROWS = categoryies
+    const TABLE_ROWS = categories
 
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:3000/api/v1/category/deletecategory/${id}`)
+            .then((res) => {
+                console.log(res.data)
+                setCategories(categories.filter((category) => category._id !== id))
+                toast.success("Category Deleted Successfully")
+            })
+    }
     return (
         <div>
             <Typography
@@ -64,18 +72,33 @@ const CategoryList = () => {
                                     </Typography>
                                 </td>
 
-                                <Link to={`/updateCategory/${_id}`}>
-                                    <td className="p-4">
-                                        <Typography as="a" variant="small" color="blue-gray" className="font-medium bg-green-400 text-white hover:bg-green-900 transition duration-500 px-2 py-3 rounded-md">
+                                <td className="p-4">
+                                    <Link to={`/updateCategory/${_id}`}>
+                                        <Typography
+                                            as="span"
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-medium bg-green-400 text-white hover:bg-green-900 transition duration-500 px-2 py-3 rounded-md"
+                                        >
                                             Update
                                         </Typography>
-                                    </td>
-                                </Link>
+                                    </Link>
+                                </td>
 
                                 <td className="p-4">
-                                    <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium bg-red-400 text-white hover:bg-red-900 transition duration-500  py-3 text-center rounded-md">
-                                        Delete
-                                    </Typography>
+                                    <Popover>
+                                        <PopoverHandler>
+                                            <Button className='font-medium bg-red-400 text-white hover:bg-red-900 transition duration-500  py-3 text-center rounded-md'>Delete</Button>
+                                        </PopoverHandler>
+                                        <PopoverContent>
+                                            <div>
+                                                <p>Are you sure you want to delete this category?</p>
+                                                <div className='flex justify-center mt-4'>
+                                                    <Button onClick={() => handleDelete(_id)} className='bg-red-400 text-white hover:bg-red-900 transition duration-500  py-3 text-center rounded-md' >Delete</Button>
+                                                </div>
+                                            </div>
+                                        </PopoverContent>
+                                    </Popover>
                                 </td>
                             </tr>
                         ))}
